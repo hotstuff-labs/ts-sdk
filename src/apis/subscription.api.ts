@@ -146,6 +146,24 @@ export class SubscriptionClient<T extends TT.ISubscriptionTransport> {
     };
   }
 
+  async orders(
+    params: { user: string },
+    listener: (data: CustomEvent<any>) => void,
+  ): Promise<TT.ISubscriptionResult> {
+    const request = {
+      user: params.user,
+    };
+
+    const result = await this.transport.subscribe("order", request, listener);
+    const resultWithId = result as any;
+
+    return {
+      subscriptionId: resultWithId.subscriptionId,
+      unsubscribe: () =>
+        this.transport.unsubscribe(resultWithId.subscriptionId),
+    };
+  }
+
   async accountBalanceUpdates(
     params: { address: string },
     listener: (data: CustomEvent<any>) => void,
