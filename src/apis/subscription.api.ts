@@ -225,6 +225,28 @@ export class SubscriptionClient<T extends TT.ISubscriptionTransport> {
     };
   }
 
+  async fundingPayments(
+    params: { user: string },
+    listener: (data: CustomEvent<any>) => void,
+  ): Promise<TT.ISubscriptionResult> {
+    const request = {
+      user: params.user,
+    };
+
+    const result = await this.transport.subscribe(
+      "funding_payments",
+      request,
+      listener,
+    );
+    const resultWithId = result as any;
+
+    return {
+      subscriptionId: resultWithId.subscriptionId,
+      unsubscribe: () =>
+        this.transport.unsubscribe(resultWithId.subscriptionId),
+    };
+  }
+
   async accountSummary(
     params: { user: string },
     listener: (data: CustomEvent<any>) => void,
