@@ -1,9 +1,17 @@
-export type SupportedChartResolutions = '1' | '5' | '15' | '60' | '240' | '1D' | '1W';
+export type SupportedChartResolutions =
+  | "1"
+  | "5"
+  | "15"
+  | "30"
+  | "60"
+  | "240"
+  | "1D"
+  | "1W";
 
-export type SupportedChartTypes = 'mark' | 'ltp' | 'index';
+export type SupportedChartTypes = "mark" | "ltp" | "index";
 
 export interface IOrderbookParams {
-  instrumentId: string;
+  symbol: string;
 }
 
 export interface IOrderbook {
@@ -30,7 +38,7 @@ export interface ITrade {
   price: number;
   size: number;
   timestamp: number;
-  side: 'buy' | 'sell';
+  side: "buy" | "sell";
 }
 
 export interface IOrderUpdate {
@@ -39,7 +47,7 @@ export interface IOrderUpdate {
   instrument: string;
   price: number;
   size: number;
-  side: 'buy' | 'sell';
+  side: "buy" | "sell";
   status: string;
   timestamp: number;
 }
