@@ -111,8 +111,8 @@ const chart = await info.chart({
   symbol: 'BTC-PERP',
   resolution: '60', // '1', '5', '15', '60', '240', '1D', '1W'
   chart_type: 'mark', // 'mark', 'ltp', 'index'
-  from: Math.floor(Date.now() / 1000) - 86400, // start timestamp
-  to: Math.floor(Date.now() / 1000), // end timestamp
+  from: Date.now() - 86400, // start timestamp
+  to: Date.now(), // end timestamp
 });
 ```
 
@@ -281,7 +281,7 @@ await exchange.placeOrder({
     broker: '0x0000000000000000000000000000000000000000',
     fee: '0.001',
   },
-  expiresAfter: Math.floor(Date.now() / 1000) + 3600, // 1 hour from now
+  expiresAfter: Date.now() + 3600, // 1 hour from now
 });
 
 // Cancel order by order ID
@@ -290,18 +290,24 @@ await exchange.cancelByOid({
     { oid: 123456, instrumentId: 1 },
     { oid: 123457, instrumentId: 1 },
   ],
-  expiresAfter: Math.floor(Date.now() / 1000) + 3600,
+  expiresAfter: Date.now() + 3600,
 });
 
 // Cancel order by client order ID
 await exchange.cancelByCloid({
   cancels: [{ cloid: 'my-order-123', instrumentId: 1 }],
-  expiresAfter: Math.floor(Date.now() / 1000) + 3600,
+  expiresAfter: Date.now() + 3600,
+});
+
+// Cancel all orders for a specific instrument
+await exchange.cancelByInstrument({
+  instrumentId: 1,
+  expiresAfter: Date.now() + 3600,
 });
 
 // Cancel all orders
 await exchange.cancelAll({
-  expiresAfter: Math.floor(Date.now() / 1000) + 3600,
+  expiresAfter: Date.now() + 3600,
 });
 ```
 
@@ -315,7 +321,7 @@ await exchange.addAgent({
   forAccount: '',
   agentPrivateKey: '0xprivatekey...',
   signer: '0xsigner...',
-  validUntil: Math.floor(Date.now() / 1000) + 86400, // 24 hours
+  validUntil: Date.now() + 86400, // 24 hours
 });
 
 // Revoke an agent
@@ -833,7 +839,7 @@ async function main() {
               cloid: `order-${Date.now()}`,
             },
           ],
-          expiresAfter: Math.floor(Date.now() / 1000) + 3600,
+          expiresAfter: Date.now() + 3600,
         });
         console.log('Order placed!');
       } catch (error) {
@@ -899,7 +905,7 @@ async function brokerAgentTradingExample() {
     forAccount: '',
     agentPrivateKey: agentPrivateKey,
     signer: mainAccount.address,
-    validUntil: Math.floor(Date.now() / 1000) + 86400 * 30, // Valid for 30 days
+    validUntil: Date.now() + 86400 * 30, // Valid for 30 days
   });
   console.log('Agent added:', agentAccount.address);
 
@@ -935,7 +941,7 @@ async function brokerAgentTradingExample() {
       broker: brokerAddress,
       fee: '0.0005', // 0.05% fee (must be <= approved maxFeeRate)
     },
-    expiresAfter: Math.floor(Date.now() / 1000) + 3600,
+    expiresAfter: Date.now() + 3600,
   });
   console.log('Order placed with broker fee!');
 

@@ -53,6 +53,13 @@ export interface ICancelByCloidMethodParams {
   nonce?: number;
 }
 
+/**---Cancel By Instrument Method---*/
+export interface ICancelByInstrumentMethodParams {
+  instrumentId: number;
+  expiresAfter: number;
+  nonce?: number;
+}
+
 /**---Cancel All Method---*/
 export interface ICancelAllMethodParams {
   expiresAfter: number;

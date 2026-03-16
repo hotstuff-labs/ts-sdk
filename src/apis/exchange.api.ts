@@ -47,27 +47,27 @@ export class ExchangeClient<T extends TT.IRequestTransport, W> {
     return this._executeAction({ action: 'addAgent', params }, opts?.signal, execute);
   }
 
-  async revokeAgent(params: AM.IRevokeAgentMethodParams,  opts?: any): Promise<any> {
+  async revokeAgent(params: AM.IRevokeAgentMethodParams, opts?: any): Promise<any> {
     return this._executeAction({ action: 'revokeAgent', params }, opts?.signal);
   }
 
-  async updatePerpInstrumentLeverage(params: AM.IUpdatePerpInstrumentLeverageMethodParams,  opts?: any): Promise<any> {
+  async updatePerpInstrumentLeverage(params: AM.IUpdatePerpInstrumentLeverageMethodParams, opts?: any): Promise<any> {
     return this._executeAction({ action: 'updatePerpInstrumentLeverage', params }, opts?.signal);
   }
 
-  async approveBrokerFee(params: AM.IApproveBrokerFeeMethodParams,  opts?: any): Promise<any> {
+  async approveBrokerFee(params: AM.IApproveBrokerFeeMethodParams, opts?: any): Promise<any> {
     return this._executeAction({ action: 'approveBrokerFee', params }, opts?.signal);
   }
 
-  async createReferralCode(params: AM.ICreateReferralCodeMethodParams,  opts?: any): Promise<any> {
+  async createReferralCode(params: AM.ICreateReferralCodeMethodParams, opts?: any): Promise<any> {
     return this._executeAction({ action: 'createReferralCode', params }, opts?.signal);
   }
 
-  async setReferrer(params: AM.ISetReferrerMethodParams,  opts?: any): Promise<any> {
+  async setReferrer(params: AM.ISetReferrerMethodParams, opts?: any): Promise<any> {
     return this._executeAction({ action: 'setReferrer', params }, opts?.signal);
   }
 
-  async claimReferralRewards(params: AM.IClaimReferralRewardsMethodParams,  opts?: any): Promise<any> {
+  async claimReferralRewards(params: AM.IClaimReferralRewardsMethodParams, opts?: any): Promise<any> {
     return this._executeAction({ action: 'claimReferralRewards', params }, opts?.signal);
   }
 
@@ -84,6 +84,11 @@ export class ExchangeClient<T extends TT.IRequestTransport, W> {
   async cancelByCloid(params: TM.ICancelByCloidMethodParams, opts?: any): Promise<any> {
     return this._executeAction({ action: 'cancelByCloid', params }, opts?.signal);
   }
+
+  async cancelByInstrument(params: TM.ICancelByInstrumentMethodParams, opts?: any): Promise<any> {
+    return this._executeAction({ action: 'cancelByInstrument', params }, opts?.signal);
+  }
+
 
   async cancelAll(params: TM.ICancelAllMethodParams, opts?: any): Promise<any> {
     return this._executeAction({ action: 'cancelAll', params }, opts?.signal);
