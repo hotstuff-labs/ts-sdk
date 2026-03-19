@@ -410,3 +410,27 @@ export interface IAccountInfoResponse {
     created_at: number,
   }[],
 }
+
+
+/**Brokers Check Method */
+export interface IBrokersCheckParams {
+  user?: Address;
+  broker?: Address;
+  limit?: number;
+  page?: number;
+}
+
+export interface IBrokersCheckResponse {
+  data: {
+    account: Address,
+    broker: Address,
+    max_fee_rate: string,
+    updated_at: number,
+  }[],
+  page: number,
+  limit: number,
+  total_count: number,
+  total_pages: number,
+  has_next: boolean,
+  has_prev: boolean
+}

@@ -250,6 +250,14 @@ export class InfoClient<T extends TT.IRequestTransport> {
     return this.transport.request('info', request, signal);
   }
 
+  async brokersCheck(params: AM.IBrokersCheckParams, signal?: AbortSignal): Promise<AM.IBrokersCheckResponse> {
+    const request = {
+      method: 'brokersCheck',
+      params,
+    };
+    return this.transport.request('info', request, signal);
+  }
+
   /**---Vault Info Endpoints---*/
 
   async vaults(params: VM.IVaultsParams, signal?: AbortSignal): Promise<VM.IVaultsResponse> {
