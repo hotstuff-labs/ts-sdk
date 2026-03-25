@@ -1,4 +1,5 @@
 import { ClientsTypes as CT, TransportsTypes as TT } from "../types";
+import { Address } from "viem";
 
 import { GlobalSubscriptionMethods as GM } from "../methods";
 
@@ -16,6 +17,47 @@ export class SubscriptionClient<T extends TT.ISubscriptionTransport> {
     listener: (data: CustomEvent<any>) => void,
   ): Promise<TT.ISubscriptionResult> {
     const result = await this.transport.subscribe("ticker", params, listener);
+    const resultWithId = result as any;
+
+    return {
+      subscriptionId: resultWithId.subscriptionId,
+      unsubscribe: () =>
+        this.transport.unsubscribe(resultWithId.subscriptionId),
+    };
+  }
+
+  async orderbook(
+    params: GM.IOrderbookParams,
+    listener: (data: CustomEvent<any>) => void,
+  ): Promise<TT.ISubscriptionResult> {
+    const request = {
+      symbol: params.symbol,
+    };
+
+    const result = await this.transport.subscribe<any>(
+      "orderbook",
+      request,
+      listener,
+    );
+    const resultWithId = result as any;
+
+    return {
+      subscriptionId: resultWithId.subscriptionId,
+      unsubscribe: () =>
+        this.transport.unsubscribe(resultWithId.subscriptionId),
+    };
+  }
+
+
+  async trades(
+    params: { symbol: string },
+    listener: (data: CustomEvent<any>) => void,
+  ): Promise<TT.ISubscriptionResult> {
+    const request = {
+      symbol: params.symbol,
+    };
+
+    const result = await this.transport.subscribe("trades", request, listener);
     const resultWithId = result as any;
 
     return {
@@ -53,47 +95,6 @@ export class SubscriptionClient<T extends TT.ISubscriptionTransport> {
     };
   }
 
-  async orderbook(
-    params: GM.IOrderbookParams,
-    listener: (data: CustomEvent<any>) => void,
-  ): Promise<TT.ISubscriptionResult> {
-    const request = {
-      symbol: params.symbol,
-    };
-
-    const result = await this.transport.subscribe<any>(
-      "orderbook",
-      request,
-      listener,
-    );
-    const resultWithId = result as any;
-
-    return {
-      subscriptionId: resultWithId.subscriptionId,
-      unsubscribe: () =>
-        this.transport.unsubscribe(resultWithId.subscriptionId),
-    };
-  }
-
-  async trade(
-    params: { instrumentId: string },
-    listener: (data: CustomEvent<any>) => void,
-  ): Promise<TT.ISubscriptionResult> {
-    const request = {
-      instrumentId: params.instrumentId,
-      symbol: params.instrumentId,
-    };
-
-    const result = await this.transport.subscribe("trade", request, listener);
-    const resultWithId = result as any;
-
-    return {
-      subscriptionId: resultWithId.subscriptionId,
-      unsubscribe: () =>
-        this.transport.unsubscribe(resultWithId.subscriptionId),
-    };
-  }
-
   async index(
     listener: (data: CustomEvent<any>) => void,
   ): Promise<TT.ISubscriptionResult> {
@@ -109,7 +110,7 @@ export class SubscriptionClient<T extends TT.ISubscriptionTransport> {
 
   async chart(
     params: {
-      symbol: string;
+      instrument_id: string;
       chart_type: GM.SupportedChartTypes;
       resolution: GM.SupportedChartResolutions;
     },
@@ -126,17 +127,18 @@ export class SubscriptionClient<T extends TT.ISubscriptionTransport> {
   }
 
   /** Account Subscription Endpoints */
-
-  async accountOrderUpdates(
-    params: { address: string },
+  async accountSummary(
+    params: { user: Address },
     listener: (data: CustomEvent<any>) => void,
   ): Promise<TT.ISubscriptionResult> {
     const request = {
-      address: params.address,
-      user: params.address,
+      user: params.user,
     };
-
-    const result = await this.transport.subscribe("order", request, listener);
+    const result = await this.transport.subscribe(
+      "account_summary",
+      request,
+      listener,
+    );
     const resultWithId = result as any;
 
     return {
@@ -147,33 +149,14 @@ export class SubscriptionClient<T extends TT.ISubscriptionTransport> {
   }
 
   async orders(
-    params: { user: string },
+    params: { user: Address },
     listener: (data: CustomEvent<any>) => void,
   ): Promise<TT.ISubscriptionResult> {
     const request = {
       user: params.user,
     };
 
-    const result = await this.transport.subscribe("order", request, listener);
-    const resultWithId = result as any;
-
-    return {
-      subscriptionId: resultWithId.subscriptionId,
-      unsubscribe: () =>
-        this.transport.unsubscribe(resultWithId.subscriptionId),
-    };
-  }
-
-  async accountBalanceUpdates(
-    params: { address: string },
-    listener: (data: CustomEvent<any>) => void,
-  ): Promise<TT.ISubscriptionResult> {
-    const request = {
-      address: params.address,
-      user: params.address,
-    };
-
-    const result = await this.transport.subscribe("balance", request, listener);
+    const result = await this.transport.subscribe("orders", request, listener);
     const resultWithId = result as any;
 
     return {
@@ -207,12 +190,11 @@ export class SubscriptionClient<T extends TT.ISubscriptionTransport> {
   }
 
   async fills(
-    params: { address: string },
+    params: { user: Address },
     listener: (data: CustomEvent<any>) => void,
   ): Promise<TT.ISubscriptionResult> {
     const request = {
-      address: params.address,
-      user: params.address,
+      user: params.user,
     };
 
     const result = await this.transport.subscribe("fills", request, listener);
@@ -226,7 +208,7 @@ export class SubscriptionClient<T extends TT.ISubscriptionTransport> {
   }
 
   async fundingPayments(
-    params: { user: string },
+    params: { user: Address },
     listener: (data: CustomEvent<any>) => void,
   ): Promise<TT.ISubscriptionResult> {
     const request = {
@@ -247,15 +229,16 @@ export class SubscriptionClient<T extends TT.ISubscriptionTransport> {
     };
   }
 
-  async accountSummary(
-    params: { user: string },
+  async agents(
+    params: { user: Address },
     listener: (data: CustomEvent<any>) => void,
   ): Promise<TT.ISubscriptionResult> {
     const request = {
       user: params.user,
     };
+
     const result = await this.transport.subscribe(
-      "account_summary",
+      "agent",
       request,
       listener,
     );

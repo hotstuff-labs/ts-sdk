@@ -32,7 +32,7 @@ export class InfoClient<T extends TT.IRequestTransport> {
     signal?: AbortSignal,
   ): Promise<GM.ISupportedCollateralMethodResponse> {
     const request = {
-      method: 'supportedCollateral',
+      method: 'supported_collateral',
       params,
     };
     return this.transport.request('info', request, signal);
@@ -110,12 +110,45 @@ export class InfoClient<T extends TT.IRequestTransport> {
   }
 
   /**Account Info Endpoints */
+  async accountHistory(
+    params: AM.IAccountHistoryParams,
+    signal?: AbortSignal,
+  ): Promise<AM.IAccountHistoryResponse> {
+    const request = {
+      method: 'account_history',
+      params,
+    };
+    return this.transport.request('info', request, signal);
+  }
+
+  async accountInfo(
+    params: AM.IAccountInfoParams,
+    signal?: AbortSignal,
+  ): Promise<AM.IAccountInfoResponse> {
+    const request = {
+      method: 'account_info',
+      params,
+    };
+    return this.transport.request('info', request, signal);
+  }
+
+  async accountSummary(
+    params: AM.IAccountSummaryParams,
+    signal?: AbortSignal,
+  ): Promise<AM.IAccountSummaryResponse> {
+    const request = {
+      method: 'account_summary',
+      params,
+    };
+    return this.transport.request('info', request, signal);
+  }
+
   async openOrders(
     params: AM.IOpenOrdersParams,
     signal?: AbortSignal,
   ): Promise<AM.IOpenOrdersResponse> {
     const request = {
-      method: 'openOrders',
+      method: 'open_orders',
       params,
     };
     return this.transport.request('info', request, signal);
@@ -132,65 +165,21 @@ export class InfoClient<T extends TT.IRequestTransport> {
     return this.transport.request('info', request, signal);
   }
 
-  async accountSummary(
-    params: AM.IAccountSummaryParams,
-    signal?: AbortSignal,
-  ): Promise<AM.IAccountSummaryResponse> {
-    const request = {
-      method: 'accountSummary',
-      params,
-    };
-    return this.transport.request('info', request, signal);
-  }
-
-  async referralSummary(
-    params: AM.IReferralSummaryParams,
-    signal?: AbortSignal,
-  ): Promise<AM.IReferralSummaryResponse> {
-    const request = {
-      method: 'referralSummary',
-      params,
-    };
-    return this.transport.request('info', request, signal);
-  }
-
-  async userFeeInfo(
-    params: AM.IUserFeeInfoParams,
-    signal?: AbortSignal,
-  ): Promise<AM.IUserFeeInfoResponse> {
-    const request = {
-      method: 'userFees',
-      params,
-    };
-    return this.transport.request('info', request, signal);
-  }
-
-  async accountHistory(
-    params: AM.IAccountHistoryParams,
-    signal?: AbortSignal,
-  ): Promise<AM.IAccountHistoryResponse> {
-    const request = {
-      method: 'accountHistory',
-      params,
-    };
-    return this.transport.request('info', request, signal);
-  }
-
   async orderHistory(
     params: AM.IOrderHistoryParams,
     signal?: AbortSignal,
   ): Promise<AM.IOrderHistoryResponse> {
     const request = {
-      method: 'orderHistory',
+      method: 'order_history',
       params,
     };
     return this.transport.request('info', request, signal);
   }
 
-  async tradeHistory(
-    params: AM.ITradeHistoryParams,
+  async fills(
+    params: AM.IFillsParams,
     signal?: AbortSignal,
-  ): Promise<AM.ITradeHistoryResponse> {
+  ): Promise<AM.IFillsResponse> {
     const request = {
       method: 'fills',
       params,
@@ -203,7 +192,7 @@ export class InfoClient<T extends TT.IRequestTransport> {
     signal?: AbortSignal,
   ): Promise<AM.IFundingHistoryResponse> {
     const request = {
-      method: 'fundingHistory',
+      method: 'funding_history',
       params,
     };
     return this.transport.request('info', request, signal);
@@ -214,7 +203,7 @@ export class InfoClient<T extends TT.IRequestTransport> {
     signal?: AbortSignal,
   ): Promise<AM.ITransferHistoryResponse> {
     const request = {
-      method: 'transferHistory',
+      method: 'transfer_history',
       params,
     };
     return this.transport.request('info', request, signal);
@@ -225,26 +214,15 @@ export class InfoClient<T extends TT.IRequestTransport> {
     signal?: AbortSignal,
   ): Promise<AM.IInstrumentLeverageResponse> {
     const request = {
-      method: 'instrumentLeverage',
+      method: 'instrument_leverage',
       params,
     };
     return this.transport.request('info', request, signal);
   }
 
-  async agents(params: AM.IAgentsParams, signal?: AbortSignal): Promise<AM.IAgentsResponse> {
+  async allAgents(params: AM.IAllAgentsParams, signal?: AbortSignal): Promise<AM.IAllAgentsResponse> {
     const request = {
-      method: 'allAgents',
-      params,
-    };
-    return this.transport.request('info', request, signal);
-  }
-
-  async accountInfo(
-    params: AM.IAccountInfoParams,
-    signal?: AbortSignal,
-  ): Promise<AM.IAccountInfoResponse> {
-    const request = {
-      method: 'accountInfo',
+      method: 'all_agents',
       params,
     };
     return this.transport.request('info', request, signal);
@@ -252,7 +230,29 @@ export class InfoClient<T extends TT.IRequestTransport> {
 
   async brokersCheck(params: AM.IBrokersCheckParams, signal?: AbortSignal): Promise<AM.IBrokersCheckResponse> {
     const request = {
-      method: 'brokersCheck',
+      method: 'brokers_check',
+      params,
+    };
+    return this.transport.request('info', request, signal);
+  }
+
+  async referralSummary(
+    params: AM.IReferralSummaryParams,
+    signal?: AbortSignal,
+  ): Promise<AM.IReferralSummaryResponse> {
+    const request = {
+      method: 'referral_summary',
+      params,
+    };
+    return this.transport.request('info', request, signal);
+  }
+
+  async userFeeInfo(
+    params: AM.IUserFeeInfoParams,
+    signal?: AbortSignal,
+  ): Promise<AM.IUserFeeInfoResponse> {
+    const request = {
+      method: 'user_fees',
       params,
     };
     return this.transport.request('info', request, signal);
@@ -273,7 +273,7 @@ export class InfoClient<T extends TT.IRequestTransport> {
     signal?: AbortSignal,
   ): Promise<VM.ISubVaultsResponse> {
     const request = {
-      method: 'subVaults',
+      method: 'sub_vaults',
       params,
     };
     return this.transport.request('info', request, signal);
@@ -284,7 +284,7 @@ export class InfoClient<T extends TT.IRequestTransport> {
     signal?: AbortSignal,
   ): Promise<VM.IVaultBalancesResponse> {
     const request = {
-      method: 'vaultBalance',
+      method: 'vault_balance',
       params,
     };
     return this.transport.request('info', request, signal);

@@ -11,7 +11,9 @@ export interface IOracleMethodResponse {
 }
 
 /**Supported Collateral */
-export interface ISupportedCollateralMethodParams { }
+export interface ISupportedCollateralMethodParams {
+  symbol: string;
+}
 
 export interface ISupportedCollateral {
   id: number;
@@ -22,10 +24,10 @@ export interface ISupportedCollateral {
   price_index: string;
   type: number;
   bridge_by_chain: {
-    bridgeChainType: number;
-    bridgeChainId: number;
-    tokenAddress: string;
-    bridgeContractAddress: string;
+    bridge_chain_type: number;
+    bridge_chain_id: number;
+    token_address: string;
+    bridge_contract_address: string;
     enabled: boolean;
   }[];
   coll_risk: {
@@ -155,7 +157,9 @@ export interface ITrade {
 export type ITradesMethodResponse = ITrade[];
 
 /**Mids */
-export interface IMidsMethodParams { }
+export interface IMidsMethodParams {
+  symbol: string;
+}
 
 export interface IMid {
   symbol: string;
