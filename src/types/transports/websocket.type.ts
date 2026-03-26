@@ -26,14 +26,14 @@ export interface JSONRPCMessage {
   jsonrpc: "2.0";
   method: string;
   params?: any;
-  id: string | null;
+  id: string | number | null;
 }
 
 export interface JSONRPCResponse<T = any> {
   jsonrpc: "2.0";
   result?: T;
   error?: JSONRPCError;
-  id: string | null;
+  id: string | number | null;
 }
 
 export interface JSONRPCError {

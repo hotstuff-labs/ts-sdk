@@ -36,6 +36,21 @@ async function main() {
         const indexSubscription = await subscriptions.index(buildListener("index"));
         activeSubscriptions.push(indexSubscription);
 
+        console.log("Subscribing to mids...");
+        const midsSubscription = await subscriptions.mids({ symbol: "BTC-PERP" }, buildListener("mids"));
+        activeSubscriptions.push(midsSubscription);
+
+        console.log("Subscribing to BBO...");
+        const bboSubscription = await subscriptions.bbo({ symbol: "BTC-PERP" }, buildListener("bbo"));
+        activeSubscriptions.push(bboSubscription);
+
+        console.log("Subscribing to chart...");
+        const chartSubscription = await subscriptions.chart(
+            { instrument_id: 1, resolution: "5", chart_type: "mark" },
+            buildListener("chart"),
+        );
+        activeSubscriptions.push(chartSubscription);
+
         await waitForUpdates(20);
     } finally {
         console.log("Cleaning up subscriptions...");
