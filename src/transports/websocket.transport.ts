@@ -62,12 +62,23 @@ export class WebSocketTransport {
     }
 
     if (this.connectionPromise) {
-      await this.connectionPromise;
-      return;
+      try {
+        await this.connectionPromise;
+      } catch (error) {
+        this.connectionPromise = null;
+      }
+      if (this.ws?.readyState === WebSocket.OPEN) {
+        return;
+      }
     }
 
     this.connectionPromise = this.connect();
-    await this.connectionPromise;
+    try {
+      await this.connectionPromise;
+    } catch (error) {
+      this.connectionPromise = null;
+      throw error;
+    }
   }
 
   private cleanup(): void {
@@ -92,21 +103,27 @@ export class WebSocketTransport {
   }
 
   private handleIncomingMessage(message: any): void {
-    if (message.id && (message.result !== undefined || message.error !== undefined)) {
+    if (
+      message.id !== null &&
+      message.id !== undefined &&
+      (message.result !== undefined || message.error !== undefined)
+    ) {
       this.handleJSONRPCResponse(message as TT.JSONRPCResponse);
       return;
     }
 
-    if (message.method && message.params && !message.id) {
+    if (message.method && message.params && (message.id === null || message.id === undefined)) {
       this.handleJSONRPCNotification(message as TT.JSONRPCNotification);
       return;
     }
   }
 
   private handleJSONRPCResponse(response: TT.JSONRPCResponse): void {
-    const queueItem = this.messageQueue.find((item) => item.id === response.id);
+    const responseId =
+      response.id === null || response.id === undefined ? null : String(response.id);
+    const queueItem = this.messageQueue.find((item) => item.id === responseId);
     if (queueItem) {
-      this.messageQueue = this.messageQueue.filter((item) => item.id !== response.id);
+      this.messageQueue = this.messageQueue.filter((item) => item.id !== responseId);
 
       if (response.error) {
         queueItem.reject(
@@ -155,22 +172,28 @@ export class WebSocketTransport {
       }
 
       if (message.id !== undefined) {
+        const requestId = String(message.id);
         this.messageQueue.push({
-          id: message.id as string,
+          id: requestId,
           resolve,
           reject,
         });
 
         if (this.timeout) {
           setTimeout(() => {
-            this.messageQueue = this.messageQueue.filter((qm) => qm.id !== message.id);
+            this.messageQueue = this.messageQueue.filter((qm) => qm.id !== requestId);
             reject(new Error('Request timeout'));
           }, this.timeout);
         }
       }
 
+      if (!this.ws || this.ws.readyState !== WebSocket.OPEN) {
+        reject(new Error('WebSocket is not connected'));
+        return;
+      }
+
       const messageStr = JSON.stringify(message);
-      this.ws!.send(messageStr);
+      this.ws.send(messageStr);
 
       if (message.id === undefined) {
         resolve({} as T);

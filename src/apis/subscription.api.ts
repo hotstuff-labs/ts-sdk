@@ -110,7 +110,7 @@ export class SubscriptionClient<T extends TT.ISubscriptionTransport> {
 
   async chart(
     params: {
-      instrument_id: string;
+      instrument_id: number;
       chart_type: GM.SupportedChartTypes;
       resolution: GM.SupportedChartResolutions;
     },

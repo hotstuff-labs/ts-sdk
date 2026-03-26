@@ -196,7 +196,7 @@ export type SupportedChartResolutions =
 export type SupportedChartTypes = "mark" | "ltp" | "index";
 
 export interface IChartMethodParams {
-  symbol: string;
+  instrument_id: number;
   resolution: SupportedChartResolutions;
   from: number;
   to: number;
