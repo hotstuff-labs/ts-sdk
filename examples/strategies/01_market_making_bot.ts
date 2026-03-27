@@ -1,11 +1,11 @@
-import type { TradingExchangeMethods as TM } from "../src/methods/index.ts";
+import type { TradingExchangeMethods as TM } from "../../src/methods/index.ts";
 import {
     cleanupSubscriptions,
     msFromNow,
     setupInfoClient,
     setupSubscriptionClient,
     setupTradingClient,
-} from "./example_utils.ts";
+} from "../utils/example_utils.ts";
 
 type Side = "b" | "s";
 

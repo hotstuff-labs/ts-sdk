@@ -1,4 +1,4 @@
-import { printJson, setupInfoClient } from "./example_utils.ts";
+import { printJson, setupInfoClient } from "../utils/example_utils";
 
 const BLOCK_HEIGHT = 162778;
 const TRANSACTION_HASH =

@@ -1,4 +1,4 @@
-import { printJson, setupInfoClient } from "./example_utils.ts";
+import { printJson, setupInfoClient } from "../utils/example_utils";
 
 async function main() {
     console.log("--------------------------------\nGlobal trading data\n");

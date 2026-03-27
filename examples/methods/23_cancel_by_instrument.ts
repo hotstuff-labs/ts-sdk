@@ -1,4 +1,4 @@
-import { msFromNow, printJson, setupTradingClient } from "./example_utils.ts";
+import { msFromNow, printJson, setupTradingClient } from "../utils/example_utils";
 
 async function main() {
     console.log("--------------------------------\nCancel by instrument\n");

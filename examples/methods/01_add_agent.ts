@@ -1,5 +1,5 @@
-import { msFromNow, printJson, setupExchangeClient } from "./example_utils.ts";
-import { ADDRESSES, CREDENTIALS } from "./config.ts";
+import { msFromNow, printJson, setupExchangeClient } from "../utils/example_utils";
+import { ADDRESSES, CREDENTIALS } from "../utils/config";
 
 async function main() {
     console.log("--------------------------------\nAdding agent\n");

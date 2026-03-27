@@ -1,5 +1,5 @@
-import { printJson, setupExchangeClient } from "./example_utils.ts";
-import { ADDRESSES } from "./config.ts";
+import { printJson, setupExchangeClient } from "../utils/example_utils";
+import { ADDRESSES } from "../utils/config";
 
 async function main() {
     console.log("--------------------------------\nRevoking agent\n");

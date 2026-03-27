@@ -1,4 +1,4 @@
-import { printJson, setupTradingClient } from "./example_utils.ts";
+import { printJson, setupTradingClient } from "../utils/example_utils";
 
 async function main() {
     console.log("--------------------------------\nSpot withdraw request\n");

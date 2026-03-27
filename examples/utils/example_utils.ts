@@ -6,7 +6,7 @@ import {
     InfoClient,
     SubscriptionClient,
     WebSocketTransport,
-} from "../src/index.ts";
+} from "../../src/index.ts";
 
 
 

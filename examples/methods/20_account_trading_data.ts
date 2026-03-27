@@ -1,5 +1,5 @@
-import { printJson, setupInfoClient } from "./example_utils.ts";
-import { ADDRESSES } from "./config.ts";
+import { printJson, setupInfoClient } from "../utils/example_utils";
+import { ADDRESSES } from "../utils/config";
 
 async function main() {
     console.log("--------------------------------\nAccount trading data\n");

@@ -3,7 +3,7 @@ import {
     cleanupSubscriptions,
     setupSubscriptionClient,
     waitForUpdates,
-} from "./example_utils.ts";
+} from "../utils/example_utils";
 
 
 async function main() {

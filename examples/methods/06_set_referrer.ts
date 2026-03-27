@@ -1,4 +1,4 @@
-import { printJson, setupExchangeClient } from "./example_utils.ts";
+import { printJson, setupExchangeClient } from "../utils/example_utils";
 
 async function main() {
     console.log("--------------------------------\nSet referrer\n");

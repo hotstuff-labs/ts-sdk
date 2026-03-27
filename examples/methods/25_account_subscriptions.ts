@@ -3,8 +3,8 @@ import {
     cleanupSubscriptions,
     setupSubscriptionClient,
     waitForUpdates,
-} from "./example_utils.ts";
-import { ADDRESSES } from "./config.ts";
+} from "../utils/example_utils";
+import { ADDRESSES } from "../utils/config";
 
 async function main() {
     console.log("--------------------------------\nAccount subscriptions\n");

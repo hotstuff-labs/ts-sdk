@@ -1,8 +1,8 @@
 import {
     printJson,
     setupExchangeClient,
-} from "./example_utils.ts";
-import { ADDRESSES } from "./config.ts";
+} from "../utils/example_utils";
+import { ADDRESSES } from "../utils/config";
 
 async function main() {
     console.log("--------------------------------\nVault deposit request\n");
