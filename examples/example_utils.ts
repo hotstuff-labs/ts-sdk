@@ -1,5 +1,5 @@
 import { privateKeyToAccount } from "viem/accounts";
-import { CREDENTIALS } from "./credentials.ts";
+import { CREDENTIALS, CONFIG } from "./config.ts";
 import {
     ExchangeClient,
     HttpTransport,
@@ -18,40 +18,43 @@ export function msFromNow(minutes = 60): number {
     return Date.now() + minutes * 60_000;
 }
 
-export function setupInfoClient({ isTestnet = true }: { isTestnet?: boolean }) {
-    const transport = new HttpTransport({ isTestnet: isTestnet ?? true });
-    const info = new InfoClient({ transport });
-    return { info, transport };
+export function setupInfoClient() {
+    const http_transport = new HttpTransport({ isTestnet: CONFIG.IS_TESTNET, });
+    const ws_transport = new WebSocketTransport({ isTestnet: CONFIG.IS_TESTNET, autoConnect: true });
+    const info = new InfoClient({ transport: CONFIG.IS_WEBSOCKET ? ws_transport : http_transport });
+    return { info, http_transport, ws_transport };
 }
 
-export function setupExchangeClient({ isTestnet = true }: { isTestnet?: boolean }) {
-    const transport = new HttpTransport({ isTestnet: isTestnet ?? true });
+export function setupExchangeClient() {
+    const http_transport = new HttpTransport({ isTestnet: CONFIG.IS_TESTNET });
+    const ws_transport = new WebSocketTransport({ isTestnet: CONFIG.IS_TESTNET, autoConnect: true });
     const account = privateKeyToAccount(CREDENTIALS.MAIN_ACCOUNT_PRIVATE_KEY);
 
     const exchange = new ExchangeClient({
-        transport,
+        transport: CONFIG.IS_WEBSOCKET ? ws_transport : http_transport,
         wallet: account,
     });
 
-    return { exchange, transport, account };
+    return { exchange, http_transport, ws_transport, account };
 }
 
-export function setupTradingClient({ isTestnet = true }: { isTestnet?: boolean }) {
-    const transport = new HttpTransport({ isTestnet: isTestnet ?? true });
+export function setupTradingClient() {
+    const http_transport = new HttpTransport({ isTestnet: CONFIG.IS_TESTNET });
+    const ws_transport = new WebSocketTransport({ isTestnet: CONFIG.IS_TESTNET, autoConnect: true });
     const account = privateKeyToAccount(CREDENTIALS.AGENT_PRIVATE_KEY);
 
     const exchange = new ExchangeClient({
-        transport,
+        transport: CONFIG.IS_WEBSOCKET ? ws_transport : http_transport,
         wallet: account,
     });
 
-    return { exchange, transport, account };
+    return { exchange, http_transport, ws_transport, account };
 }
 
-export function setupSubscriptionClient({ isTestnet = true }: { isTestnet?: boolean }) {
-    const transport = new WebSocketTransport({ isTestnet: isTestnet ?? true, autoConnect: true });
-    const subscriptions = new SubscriptionClient({ transport });
-    return { subscriptions, transport };
+export function setupSubscriptionClient() {
+    const ws_transport = new WebSocketTransport({ isTestnet: CONFIG.IS_TESTNET, autoConnect: true });
+    const subscriptions = new SubscriptionClient({ transport: ws_transport });
+    return { subscriptions, ws_transport };
 }
 
 export function buildListener(channelName: string) {

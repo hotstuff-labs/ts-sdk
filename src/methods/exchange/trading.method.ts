@@ -11,10 +11,10 @@ export interface IUnitOrder {
   ro: boolean;
   po: boolean;
   cloid: string;
-  triggerPx?: string;
-  isMarket?: boolean;
-  tpsl?: 'tp' | 'sl' | '';
-  grouping?: 'position' | 'normal' | '';
+  triggerPx: string;
+  isMarket: boolean;
+  tpsl: 'tp' | 'sl' | '';
+  grouping: 'position' | 'normal' | '';
 }
 
 export interface IBrokerConfig {

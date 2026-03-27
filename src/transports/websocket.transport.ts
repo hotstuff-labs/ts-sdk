@@ -313,14 +313,74 @@ export class WebSocketTransport {
     return this.sendJSONRPCMessage<TT.PongResult>(message);
   }
 
+  private createAbortError(): Error {
+    if (typeof DOMException !== 'undefined') {
+      return new DOMException('The operation was aborted', 'AbortError');
+    }
+
+    const error = new Error('The operation was aborted');
+    error.name = 'AbortError';
+    return error;
+  }
+
+  private normalizeRequestResult<T>(result: unknown): T {
+    if (
+      result &&
+      typeof result === 'object' &&
+      'data' in result &&
+      (result as { data?: unknown }).data !== undefined
+    ) {
+      return (result as { data: T }).data;
+    }
+
+    return result as T;
+  }
+
   async request<T>(
     type: 'info' | 'exchange' | 'explorer',
     payload: unknown,
     signal?: AbortSignal,
   ): Promise<T> {
-    throw new Error(
-      'Use specific WebSocket methods (subscribe, unsubscribe, ping) instead of generic request',
-    );
+    if (signal?.aborted) {
+      throw this.createAbortError();
+    }
+
+    const requestId = (++this.messageIdCounter).toString();
+    const message: TT.JSONRPCMessage = {
+      jsonrpc: '2.0',
+      method: TT.WSMethod.POST,
+      params: {
+        type: type === 'exchange' ? 'action' : type,
+        payload,
+      },
+      id: requestId,
+    };
+
+    const requestPromise = this.sendJSONRPCMessage<unknown>(message);
+
+    if (!signal) {
+      const result = await requestPromise;
+      return this.normalizeRequestResult<T>(result);
+    }
+
+    return new Promise<T>((resolve, reject) => {
+      const onAbort = () => {
+        this.messageQueue = this.messageQueue.filter((item) => item.id !== requestId);
+        reject(this.createAbortError());
+      };
+
+      signal.addEventListener('abort', onAbort, { once: true });
+
+      requestPromise
+        .then((result) => {
+          signal.removeEventListener('abort', onAbort);
+          resolve(this.normalizeRequestResult<T>(result));
+        })
+        .catch((error) => {
+          signal.removeEventListener('abort', onAbort);
+          reject(error);
+        });
+    });
   }
 
   async subscribe<T>(

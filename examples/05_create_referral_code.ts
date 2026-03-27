@@ -2,7 +2,7 @@ import { printJson, setupExchangeClient } from "./example_utils.ts";
 
 async function main() {
     console.log("--------------------------------\nCreate referral code\n");
-    const { exchange } = setupExchangeClient({ isTestnet: true });
+    const { exchange } = setupExchangeClient();
 
     const result = await exchange.createReferralCode({
         code: "1234567890",

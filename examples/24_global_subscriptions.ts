@@ -4,11 +4,11 @@ import {
     setupSubscriptionClient,
     waitForUpdates,
 } from "./example_utils.ts";
-import { CREDENTIALS } from "./credentials.ts";
+
 
 async function main() {
     console.log("--------------------------------\nGlobal subscriptions\n");
-    const { subscriptions, transport } = setupSubscriptionClient({ isTestnet: true });
+    const { subscriptions, ws_transport } = setupSubscriptionClient();
     const activeSubscriptions: Array<{ unsubscribe: () => Promise<void> }> = [];
 
     try {
@@ -55,7 +55,7 @@ async function main() {
         await waitForUpdates(20);
     } finally {
         console.log("Cleaning up subscriptions...");
-        await cleanupSubscriptions(activeSubscriptions, transport);
+        await cleanupSubscriptions(activeSubscriptions, ws_transport);
     }
 }
 

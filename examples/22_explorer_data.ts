@@ -6,7 +6,7 @@ const TRANSACTION_HASH =
 
 async function main() {
     console.log("--------------------------------\nExplorer data\n");
-    const { info } = setupInfoClient({ isTestnet: true });
+    const { info } = setupInfoClient();
 
     console.log("Fetching blocks...");
     const blocks = await info.blocks({ limit: 10, offset: 0 });

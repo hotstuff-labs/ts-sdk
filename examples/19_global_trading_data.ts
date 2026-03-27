@@ -2,7 +2,7 @@ import { printJson, setupInfoClient } from "./example_utils.ts";
 
 async function main() {
     console.log("--------------------------------\nGlobal trading data\n");
-    const { info } = setupInfoClient({ isTestnet: true });
+    const { info } = setupInfoClient();
 
     console.log("Fetching oracle prices...");
     const oracle = await info.oracle({ symbol: "USDT/USDC" });

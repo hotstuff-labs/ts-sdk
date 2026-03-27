@@ -2,16 +2,14 @@ import {
     printJson,
     setupExchangeClient,
 } from "./example_utils.ts";
-import { CREDENTIALS } from "./credentials.ts";
+import { ADDRESSES } from "./config.ts";
 
 async function main() {
     console.log("--------------------------------\nVault deposit request\n");
-    const { exchange } = setupExchangeClient({
-        isTestnet: true,
-    });
+    const { exchange } = setupExchangeClient();
 
     const result = await exchange.depositToVault({
-        vaultAddress: CREDENTIALS.VAULT_ADDRESS,
+        vaultAddress: ADDRESSES.VAULT_ADDRESS,
         amount: "100.0",
     });
 

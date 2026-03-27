@@ -5,7 +5,7 @@ import {
     printJson,
     setupTradingClient,
 } from "./example_utils.ts";
-import { CREDENTIALS } from "./credentials.ts";
+import { ADDRESSES } from "./config.ts";
 
 function placeOrderPayload(): TM.IPlaceOrderMethodParams {
     return {
@@ -20,6 +20,10 @@ function placeOrderPayload(): TM.IPlaceOrderMethodParams {
                 ro: false,
                 po: false,
                 cloid: `ts-order-${Date.now()}`,
+                triggerPx: "",
+                isMarket: false,
+                tpsl: "",
+                grouping: "",
             },
         ],
         expiresAfter: msFromNow(60),
@@ -39,6 +43,10 @@ function placeOrderPayloadWithNonce(): TM.IPlaceOrderMethodParams {
                 ro: false,
                 po: false,
                 cloid: `ts-order-nonce-${Date.now()}`,
+                triggerPx: "",
+                isMarket: false,
+                tpsl: "",
+                grouping: "",
             },
         ],
         nonce: 1234567890,
@@ -59,10 +67,14 @@ function placeOrderPayloadWithBrokerConfig(): TM.IPlaceOrderMethodParams {
                 ro: false,
                 po: false,
                 cloid: `ts-order-broker-${Date.now()}`,
+                triggerPx: "",
+                isMarket: false,
+                tpsl: "",
+                grouping: "",
             },
         ],
         brokerConfig: {
-            broker: CREDENTIALS.BROKER_ADDRESS,
+            broker: ADDRESSES.BROKER_ADDRESS,
             fee: "0.001",
         },
         expiresAfter: msFromNow(60),
@@ -71,7 +83,7 @@ function placeOrderPayloadWithBrokerConfig(): TM.IPlaceOrderMethodParams {
 
 async function main() {
     console.log("--------------------------------\nPlace order\n");
-    const { exchange } = setupTradingClient({ isTestnet: true });
+    const { exchange } = setupTradingClient();
 
     // const result = await exchange.placeOrder(placeOrderPayload());
     // const result = await exchange.placeOrder(placeOrderPayloadWithBrokerConfig());

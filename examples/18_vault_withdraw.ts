@@ -2,13 +2,11 @@ import {
     printJson,
     setupExchangeClient,
 } from "./example_utils.ts";
-import { CREDENTIALS } from "./credentials.ts";
+import { CREDENTIALS } from "./config.ts";
 
 async function main() {
     console.log("--------------------------------\nVault withdraw request\n");
-    const { exchange } = setupExchangeClient({
-        isTestnet: true,
-    });
+    const { exchange } = setupExchangeClient();
 
     const result = await exchange.redeemFromVault({
         vaultAddress: CREDENTIALS.VAULT_ADDRESS,

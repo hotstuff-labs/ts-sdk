@@ -2,9 +2,7 @@ import { msFromNow, printJson, setupTradingClient } from "./example_utils.ts";
 
 async function main() {
     console.log("--------------------------------\nCancel by instrument\n");
-    const { exchange } = setupTradingClient({
-        isTestnet: true,
-    });
+    const { exchange } = setupTradingClient();
 
     const result = await exchange.cancelByInstrument({
         instrumentId: 1,

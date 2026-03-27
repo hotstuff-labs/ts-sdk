@@ -2,9 +2,7 @@ import { printJson, setupExchangeClient } from "./example_utils.ts";
 
 async function main() {
     console.log("--------------------------------\nDerivative withdraw request\n");
-    const { exchange } = setupExchangeClient({
-        isTestnet: true
-    });
+    const { exchange } = setupExchangeClient();
 
     const result = await exchange.accountDerivativeWithdrawRequest({
         collateralId: 1,

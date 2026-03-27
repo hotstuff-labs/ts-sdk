@@ -20,6 +20,7 @@ export enum WSMethod {
   SUBSCRIBE = "subscribe",
   UNSUBSCRIBE = "unsubscribe",
   PING = "ping",
+  POST = "post",
 }
 
 export interface JSONRPCMessage {

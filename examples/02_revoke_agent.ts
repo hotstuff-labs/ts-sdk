@@ -1,12 +1,12 @@
 import { printJson, setupExchangeClient } from "./example_utils.ts";
-import { CREDENTIALS } from "./credentials.ts";
+import { ADDRESSES } from "./config.ts";
 
 async function main() {
     console.log("--------------------------------\nRevoking agent\n");
-    const { exchange } = setupExchangeClient({ isTestnet: true });
+    const { exchange } = setupExchangeClient();
 
     const result = await exchange.revokeAgent({
-        agent: CREDENTIALS.AGENT_ADDRESS,
+        agent: ADDRESSES.AGENT_ADDRESS,
         forAccount: "",
     });
 
