@@ -2,7 +2,7 @@ export const ADDRESSES: Record<string, `0x${string}`> = {
     MAIN_ACCOUNT_ADDRESS:
         '0x',
     AGENT_ADDRESS:
-        '0xa6C3Dfb684D2d5fB4703CbDd73Cfcfc3AE2d4937',
+        '0x',
     BROKER_ADDRESS:
         '0x',
     DESTINATION_ADDRESS:
