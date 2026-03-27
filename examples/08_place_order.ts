@@ -1,11 +1,11 @@
 import type { TradingExchangeMethods as TM } from "../src/methods/index.ts";
 
 import {
-    BROKER_ADDRESS,
     msFromNow,
     printJson,
     setupTradingClient,
 } from "./example_utils.ts";
+import { CREDENTIALS } from "./credentials.ts";
 
 function placeOrderPayload(): TM.IPlaceOrderMethodParams {
     return {
@@ -62,7 +62,7 @@ function placeOrderPayloadWithBrokerConfig(): TM.IPlaceOrderMethodParams {
             },
         ],
         brokerConfig: {
-            broker: BROKER_ADDRESS,
+            broker: CREDENTIALS.BROKER_ADDRESS,
             fee: "0.001",
         },
         expiresAfter: msFromNow(60),

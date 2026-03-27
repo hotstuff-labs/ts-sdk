@@ -1,9 +1,10 @@
-import { MAIN_ACCOUNT_ADDRESS, printJson, setupInfoClient } from "./example_utils.ts";
+import { printJson, setupInfoClient } from "./example_utils.ts";
+import { CREDENTIALS } from "./credentials.ts";
 
 async function main() {
     console.log("--------------------------------\nAccount trading data\n");
     const { info } = setupInfoClient({ isTestnet: true });
-    const user = MAIN_ACCOUNT_ADDRESS;
+    const user = CREDENTIALS.MAIN_ACCOUNT_ADDRESS;
 
     console.log("Fetching open orders...");
     const openOrders = await info.openOrders({ user });

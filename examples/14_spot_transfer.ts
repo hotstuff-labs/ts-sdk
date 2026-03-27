@@ -1,8 +1,8 @@
 import {
-    DESTINATION_ADDRESS,
     printJson,
     setupExchangeClient,
 } from "./example_utils.ts";
+import { CREDENTIALS } from "./credentials.ts";
 
 async function main() {
     console.log("--------------------------------\nSpot balance transfer request\n");
@@ -13,7 +13,7 @@ async function main() {
     const result = await exchange.accountSpotBalanceTransferRequest({
         collateralId: 1,
         amount: "100.0",
-        destination: DESTINATION_ADDRESS,
+        destination: CREDENTIALS.DESTINATION_ADDRESS,
     });
 
     printJson(

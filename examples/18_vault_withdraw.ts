@@ -1,8 +1,8 @@
 import {
-    VAULT_ADDRESS,
     printJson,
     setupExchangeClient,
 } from "./example_utils.ts";
+import { CREDENTIALS } from "./credentials.ts";
 
 async function main() {
     console.log("--------------------------------\nVault withdraw request\n");
@@ -11,7 +11,7 @@ async function main() {
     });
 
     const result = await exchange.redeemFromVault({
-        vaultAddress: VAULT_ADDRESS,
+        vaultAddress: CREDENTIALS.VAULT_ADDRESS,
         shares: "1",
     });
 

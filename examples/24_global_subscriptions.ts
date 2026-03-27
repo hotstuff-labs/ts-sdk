@@ -4,6 +4,7 @@ import {
     setupSubscriptionClient,
     waitForUpdates,
 } from "./example_utils.ts";
+import { CREDENTIALS } from "./credentials.ts";
 
 async function main() {
     console.log("--------------------------------\nGlobal subscriptions\n");

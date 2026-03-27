@@ -1,14 +1,14 @@
 import {
-    MAIN_ACCOUNT_ADDRESS,
     buildListener,
     cleanupSubscriptions,
     setupSubscriptionClient,
     waitForUpdates,
 } from "./example_utils.ts";
+import { CREDENTIALS } from "./credentials.ts";
 
 async function main() {
     console.log("--------------------------------\nAccount subscriptions\n");
-    const userAddress = MAIN_ACCOUNT_ADDRESS;
+    const userAddress = CREDENTIALS.MAIN_ACCOUNT_ADDRESS;
     const { subscriptions, transport } = setupSubscriptionClient({ isTestnet: true });
     const activeSubscriptions: Array<{ unsubscribe: () => Promise<void> }> = [];
 

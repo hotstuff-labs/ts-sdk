@@ -1,11 +1,12 @@
-import { BROKER_ADDRESS, printJson, setupExchangeClient } from "./example_utils.ts";
+import { printJson, setupExchangeClient } from "./example_utils.ts";
+import { CREDENTIALS } from "./credentials.ts";
 
 async function main() {
     console.log("--------------------------------\nApprove broker fee\n");
-    const { exchange } = setupExchangeClient({ isTestnet: true });
+    const { exchange } = setupExchangeClient({ isTestnet: false });
 
     const result = await exchange.approveBrokerFee({
-        broker: BROKER_ADDRESS,
+        broker: CREDENTIALS.BROKER_ADDRESS,
         maxFeeRate: "0.01",
     });
 

@@ -1,5 +1,5 @@
 import { privateKeyToAccount } from "viem/accounts";
-
+import { CREDENTIALS } from "./credentials.ts";
 import {
     ExchangeClient,
     HttpTransport,
@@ -8,13 +8,7 @@ import {
     WebSocketTransport,
 } from "../src/index.ts";
 
-export const MAIN_ACCOUNT_PRIVATE_KEY = '' as `0x${string}`;
-export const MAIN_ACCOUNT_ADDRESS = '' as `0x${string}`;
-export const AGENT_PRIVATE_KEY = '' as `0x${string}`;
-export const AGENT_ADDRESS = '' as `0x${string}`;
-export const BROKER_ADDRESS = '' as `0x${string}`;
-export const DESTINATION_ADDRESS = '' as `0x${string}`;
-export const VAULT_ADDRESS = '' as `0x${string}`;
+
 
 
 type SubscriptionResult = { unsubscribe: () => Promise<void> };
@@ -32,7 +26,7 @@ export function setupInfoClient({ isTestnet = true }: { isTestnet?: boolean }) {
 
 export function setupExchangeClient({ isTestnet = true }: { isTestnet?: boolean }) {
     const transport = new HttpTransport({ isTestnet: isTestnet ?? true });
-    const account = privateKeyToAccount(MAIN_ACCOUNT_PRIVATE_KEY);
+    const account = privateKeyToAccount(CREDENTIALS.MAIN_ACCOUNT_PRIVATE_KEY);
 
     const exchange = new ExchangeClient({
         transport,
@@ -44,7 +38,7 @@ export function setupExchangeClient({ isTestnet = true }: { isTestnet?: boolean 
 
 export function setupTradingClient({ isTestnet = true }: { isTestnet?: boolean }) {
     const transport = new HttpTransport({ isTestnet: isTestnet ?? true });
-    const account = privateKeyToAccount(AGENT_PRIVATE_KEY);
+    const account = privateKeyToAccount(CREDENTIALS.AGENT_PRIVATE_KEY);
 
     const exchange = new ExchangeClient({
         transport,

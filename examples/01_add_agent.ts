@@ -1,4 +1,5 @@
-import { AGENT_ADDRESS, AGENT_PRIVATE_KEY, msFromNow, printJson, setupExchangeClient } from "./example_utils.ts";
+import { msFromNow, printJson, setupExchangeClient } from "./example_utils.ts";
+import { CREDENTIALS } from "./credentials.ts";
 
 async function main() {
     console.log("--------------------------------\nAdding agent\n");
@@ -6,9 +7,9 @@ async function main() {
 
     const result = await exchange.addAgent({
         agentName: "ts-sdk-demo-agent",
-        agent: AGENT_ADDRESS,
+        agent: CREDENTIALS.AGENT_ADDRESS,
         forAccount: "",
-        agentPrivateKey: AGENT_PRIVATE_KEY,
+        agentPrivateKey: CREDENTIALS.AGENT_PRIVATE_KEY,
         signer: mainAccount.address,
         validUntil: msFromNow(60),
     });

@@ -1,4 +1,5 @@
-import { MAIN_ACCOUNT_ADDRESS, printJson, setupInfoClient, VAULT_ADDRESS } from "./example_utils.ts";
+import { printJson, setupInfoClient } from "./example_utils.ts";
+import { CREDENTIALS } from "./credentials.ts";
 
 async function main() {
     console.log("--------------------------------\nVault data\n");
@@ -10,14 +11,14 @@ async function main() {
 
     console.log("Fetching sub vaults...");
     const subVaults = await info.subVaults({
-        vault_address: VAULT_ADDRESS,
+        vault_address: CREDENTIALS.VAULT_ADDRESS,
     });
     printJson("Sub vaults:", subVaults);
 
     console.log("Fetching vault balances...");
     const vaultBalances = await info.vaultBalances({
-        vault_address: VAULT_ADDRESS,
-        user: MAIN_ACCOUNT_ADDRESS,
+        vault_address: CREDENTIALS.VAULT_ADDRESS,
+        user: CREDENTIALS.MAIN_ACCOUNT_ADDRESS,
     });
     printJson("Vault balances:", vaultBalances);
 }

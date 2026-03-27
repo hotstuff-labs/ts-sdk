@@ -1,8 +1,8 @@
 import {
-    DESTINATION_ADDRESS,
     printJson,
     setupExchangeClient,
 } from "./example_utils.ts";
+import { CREDENTIALS } from "./credentials.ts";
 
 async function main() {
     console.log(
@@ -15,7 +15,7 @@ async function main() {
     const result = await exchange.accountDerivativeBalanceTransferRequest({
         collateralId: 1,
         amount: "100.0",
-        destination: DESTINATION_ADDRESS,
+        destination: CREDENTIALS.DESTINATION_ADDRESS,
     });
 
     printJson(
