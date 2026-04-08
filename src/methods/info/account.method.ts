@@ -55,7 +55,7 @@ export interface ICollateralBalance {
   withdrawable_balance: number,
 }
 
-export interface IVaultBalance {
+export interface IVaultAccountBalance {
   withdrawable_shares: number,
   total_shares: number,
   amount: number,
@@ -97,7 +97,7 @@ export interface IAccountSummaryResponse {
   hedge_mode: boolean,
   spot_collateral: Record<string, ICollateralBalance>,
   collateral: Record<string, ICollateralBalance>,
-  vault_balances: Record<Address, IVaultBalance>,
+  vault_balances: Record<Address, IVaultAccountBalance>,
   staked_collateral: number,
   perp_positions: Record<string, IPerpPosition>,
   initial_margin_utilization: number,
