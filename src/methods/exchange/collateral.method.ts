@@ -1,4 +1,4 @@
-import { Address } from "viem";
+import type { Address } from "viem";
 
 /**---Account Spot Withdraw Request Method---*/
 export interface IAccountSpotWithdrawRequestMethodParams {

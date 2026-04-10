@@ -1,4 +1,4 @@
-import { IRequestTransport, IMaybePromise } from "../transports";
+import type { IRequestTransport, IMaybePromise } from "../transports";
 
 export interface IExchangeClientParameters<T extends IRequestTransport, W> {
   transport: T;

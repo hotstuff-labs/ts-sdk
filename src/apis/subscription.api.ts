@@ -1,5 +1,5 @@
 import { ClientsTypes as CT, TransportsTypes as TT } from "../types";
-import { Address } from "viem";
+import type { Address } from "viem";
 
 import { GlobalSubscriptionMethods as GM } from "../methods";
 

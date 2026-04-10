@@ -1,4 +1,4 @@
-import { Address } from "viem";
+import type { Address } from "viem";
 
 /**---Deposit To Vault Method---*/
 export interface IDepositToVaultMethodParams {
