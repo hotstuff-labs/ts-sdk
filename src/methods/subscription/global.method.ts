@@ -14,31 +14,64 @@ export interface IOrderbookParams {
   symbol: string;
 }
 
-export interface IOrderbook {
-  instrumentId: string;
-  instrumentName?: string; // Alternative field name used by server
-  asks: IOrderbookItem[];
-  bids: IOrderbookItem[];
-  timestamp: number;
+export interface IWSTicker {
+  instrument_name: string;
+  instrument_id: number;
+  symbol: string;
+  mark_price: number;
+  mid_price: number;
+  index_price: number;
+  best_bid_price: number;
+  best_ask_price: number;
+  best_bid_size: number;
+  best_ask_size: number;
+  funding_rate: number;
+  volume_24h: number;
+  change_24h: number;
+  open_interest: number;
+  max_trading_price: number;
+  min_trading_price: number;
+  premium: number;
+  last_price: number;
 }
 
-export interface IOrderbookItem {
+export interface IWSOrderbook {
+  update_type: "snapshot" | "update";
+  instrument_name: string;
+  books: {
+    bids: Array<{
+      price: number;
+      size: number;
+    }>;
+    asks: Array<{
+      price: number;
+      size: number;
+    }>;
+    sequence_number: number;
+    timestamp: number;
+  };
+}
+
+export interface IWSTrade {
+  instrument_id: number;
+  instrument: string;
+  trade_id: number;
+  tx_hash: string;
+  side: "b" | "s";
   price: number;
   size: number;
-  amount?: number; // Alternative field name
-}
-
-// Additional subscription interfaces for other event types
-export interface ITrade {
-  id: string;
-  instrument: string;
-  instrumentName?: string;
   maker: string;
   taker: string;
-  price: number;
-  size: number;
   timestamp: number;
-  side: "buy" | "sell";
+}
+
+export interface IWSChart {
+  time: number;
+  open: number;
+  high: number;
+  low: number;
+  close: number;
+  volume: number;
 }
 
 export interface IOrderUpdate {
@@ -61,14 +94,4 @@ export interface IAccountBalanceUpdate {
     locked: number;
   }>;
   timestamp: number;
-}
-
-export interface IChartUpdate {
-  open: number;
-  high: number;
-  low: number;
-  close: number;
-  volume: number;
-  // in milliseconds
-  time: number;
 }

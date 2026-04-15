@@ -28,7 +28,7 @@ export class SubscriptionClient<T extends TT.ISubscriptionTransport> {
 
   async orderbook(
     params: GM.IOrderbookParams,
-    listener: (data: CustomEvent<any>) => void,
+    listener: (data: CustomEvent<GM.IWSOrderbook>) => void,
   ): Promise<TT.ISubscriptionResult> {
     const request = {
       symbol: params.symbol,
@@ -48,10 +48,9 @@ export class SubscriptionClient<T extends TT.ISubscriptionTransport> {
     };
   }
 
-
   async trades(
     params: { symbol: string },
-    listener: (data: CustomEvent<any>) => void,
+    listener: (data: CustomEvent<GM.IWSTrade>) => void,
   ): Promise<TT.ISubscriptionResult> {
     const request = {
       symbol: params.symbol,
@@ -114,7 +113,7 @@ export class SubscriptionClient<T extends TT.ISubscriptionTransport> {
       chart_type: GM.SupportedChartTypes;
       resolution: GM.SupportedChartResolutions;
     },
-    listener: (data: CustomEvent<GM.IChartUpdate>) => void,
+    listener: (data: CustomEvent<GM.IWSChart>) => void,
   ): Promise<TT.ISubscriptionResult> {
     const result = await this.transport.subscribe("chart", params, listener);
     const resultWithId = result as any;
@@ -237,11 +236,7 @@ export class SubscriptionClient<T extends TT.ISubscriptionTransport> {
       user: params.user,
     };
 
-    const result = await this.transport.subscribe(
-      "agent",
-      request,
-      listener,
-    );
+    const result = await this.transport.subscribe("agent", request, listener);
     const resultWithId = result as any;
 
     return {

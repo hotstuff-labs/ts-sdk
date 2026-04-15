@@ -3,12 +3,18 @@ export {
   AccountInfoMethods,
   VaultInfoMethods,
   ExplorerInfoMethods,
-} from './info';
+} from "./info";
 
-export { AccountExchangeMethods, TradingExchangeMethods, CollateralExchangeMethods, VaultExchangeMethods, EXCHANGE_OP_CODES } from './exchange';
+export {
+  AccountExchangeMethods,
+  TradingExchangeMethods,
+  CollateralExchangeMethods,
+  VaultExchangeMethods,
+  EXCHANGE_OP_CODES,
+} from "./exchange";
 
-export { GlobalSubscriptionMethods } from './subscription';
+export { GlobalSubscriptionMethods } from "./subscription";
 
-export * from './info';
-export * from './exchange';
-export * from './subscription';
+export * from "./info";
+export * from "./exchange";
+export * from "./subscription";
