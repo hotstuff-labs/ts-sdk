@@ -1,4 +1,9 @@
-export * as GlobalSubscriptionMethods from './global.method';
-import type { IOrderbookItem, IOrderbook, IOrderUpdate, IAccountBalanceUpdate, IChartUpdate } from './global.method';
+export * as GlobalSubscriptionMethods from "./global.method";
+import type {
+  IWSTicker,
+  IWSOrderbook,
+  IWSChart,
+  IOrderUpdate,
+} from "./global.method";
 
-export type { IOrderbookItem, IOrderbook, IOrderUpdate, IAccountBalanceUpdate, IChartUpdate };
+export type { IWSTicker, IWSOrderbook, IWSChart, IOrderUpdate };
