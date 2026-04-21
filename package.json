@@ -1,6 +1,6 @@
 {
   "name": "@hotstuff-labs/ts-sdk",
-  "version": "0.1.1-beta.7",
+  "version": "0.1.1-beta.8",
   "description": "TypeScript SDK for Hotstuff Labs",
   "type": "module",
   "main": "dist/index.js",

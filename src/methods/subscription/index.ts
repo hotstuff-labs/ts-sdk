@@ -4,6 +4,7 @@ import type {
   IWSOrderbook,
   IWSChart,
   IOrderUpdate,
+  IWSTrade
 } from "./global.method";
 
-export type { IWSTicker, IWSOrderbook, IWSChart, IOrderUpdate };
+export type { IWSTicker, IWSOrderbook, IWSChart, IOrderUpdate, IWSTrade };
