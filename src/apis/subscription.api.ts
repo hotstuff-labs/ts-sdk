@@ -1,7 +1,11 @@
 import { ClientsTypes as CT, TransportsTypes as TT } from "../types";
 import type { Address } from "viem";
 
-import { GlobalSubscriptionMethods as GM } from "../methods";
+import {
+  GlobalSubscriptionMethods as GSM,
+  AccountSubscriptionMethods as ASM,
+  AccountInfoMethods as AIM,
+} from "../methods";
 
 export class SubscriptionClient<T extends TT.ISubscriptionTransport> {
   transport: T;
@@ -27,8 +31,8 @@ export class SubscriptionClient<T extends TT.ISubscriptionTransport> {
   }
 
   async orderbook(
-    params: GM.IOrderbookParams,
-    listener: (data: CustomEvent<GM.IWSOrderbook>) => void,
+    params: GSM.IOrderbookParams,
+    listener: (data: CustomEvent<GSM.IWSOrderbook>) => void,
   ): Promise<TT.ISubscriptionResult> {
     const request = {
       symbol: params.symbol,
@@ -50,7 +54,7 @@ export class SubscriptionClient<T extends TT.ISubscriptionTransport> {
 
   async trades(
     params: { symbol: string },
-    listener: (data: CustomEvent<GM.IWSTrade>) => void,
+    listener: (data: CustomEvent<GSM.IWSTrade>) => void,
   ): Promise<TT.ISubscriptionResult> {
     const request = {
       symbol: params.symbol,
@@ -110,10 +114,10 @@ export class SubscriptionClient<T extends TT.ISubscriptionTransport> {
   async chart(
     params: {
       instrument_id: number;
-      chart_type: GM.SupportedChartTypes;
-      resolution: GM.SupportedChartResolutions;
+      chart_type: GSM.SupportedChartTypes;
+      resolution: GSM.SupportedChartResolutions;
     },
-    listener: (data: CustomEvent<GM.IWSChart>) => void,
+    listener: (data: CustomEvent<GSM.IWSChart>) => void,
   ): Promise<TT.ISubscriptionResult> {
     const result = await this.transport.subscribe("chart", params, listener);
     const resultWithId = result as any;
@@ -128,7 +132,7 @@ export class SubscriptionClient<T extends TT.ISubscriptionTransport> {
   /** Account Subscription Endpoints */
   async accountSummary(
     params: { user: Address },
-    listener: (data: CustomEvent<any>) => void,
+    listener: (data: CustomEvent<AIM.IAccountSummaryResponse>) => void,
   ): Promise<TT.ISubscriptionResult> {
     const request = {
       user: params.user,
@@ -149,7 +153,7 @@ export class SubscriptionClient<T extends TT.ISubscriptionTransport> {
 
   async orders(
     params: { user: Address },
-    listener: (data: CustomEvent<any>) => void,
+    listener: (data: CustomEvent<ASM.IWSOrder>) => void,
   ): Promise<TT.ISubscriptionResult> {
     const request = {
       user: params.user,
@@ -190,7 +194,7 @@ export class SubscriptionClient<T extends TT.ISubscriptionTransport> {
 
   async fills(
     params: { user: Address },
-    listener: (data: CustomEvent<any>) => void,
+    listener: (data: CustomEvent<ASM.IWSFill>) => void,
   ): Promise<TT.ISubscriptionResult> {
     const request = {
       user: params.user,

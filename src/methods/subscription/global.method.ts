@@ -73,25 +73,3 @@ export interface IWSChart {
   close: number;
   volume: number;
 }
-
-export interface IOrderUpdate {
-  id: string;
-  account: string;
-  instrument: string;
-  price: number;
-  size: number;
-  side: "buy" | "sell";
-  status: string;
-  timestamp: number;
-}
-
-export interface IAccountBalanceUpdate {
-  account: string;
-  balances: Array<{
-    asset: string;
-    total: number;
-    available: number;
-    locked: number;
-  }>;
-  timestamp: number;
-}
