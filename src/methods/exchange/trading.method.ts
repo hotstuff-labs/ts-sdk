@@ -1,20 +1,21 @@
-import type { Address } from 'viem';
+import type { Address } from "viem";
 
 /**---Place Order Method---*/
 export interface IUnitOrder {
   instrumentId: number;
-  side: 'b' | 's';
-  positionSide: 'LONG' | 'SHORT' | 'BOTH';
+  side: "b" | "s";
+  positionSide: "LONG" | "SHORT" | "BOTH";
   price: string;
   size: string;
-  tif: 'GTC' | 'IOC' | 'FOK';
+  tif: "GTC" | "IOC" | "FOK";
   ro: boolean;
   po: boolean;
   cloid: string;
-  triggerPx: string;
-  isMarket: boolean;
-  tpsl: 'tp' | 'sl' | '';
-  grouping: 'position' | 'normal' | '';
+  triggerPx?: string;
+  isMarket?: boolean;
+  tpsl?: "tp" | "sl" | "";
+  grouping?: "position" | "normal" | "";
+  spotOrderType?: "rfq";
 }
 
 export interface IBrokerConfig {
