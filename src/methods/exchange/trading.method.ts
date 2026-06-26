@@ -30,6 +30,18 @@ export interface IPlaceOrderMethodParams {
   nonce?: number;
 }
 
+/**---Place TWAP Order Method---*/
+export interface IPlaceTWAPOrderMethodParams {
+  instrumentId: number;
+  side: "b" | "s";
+  positionSide: "LONG" | "SHORT" | "BOTH";
+  size: string;
+  reduceOnly: boolean;
+  duration: number;
+  frequency: number;
+  nonce?: number;
+}
+
 /**---Cancel By Oid Method---*/
 export interface IUnitCancelByOrderId {
   oid: number;
@@ -64,5 +76,11 @@ export interface ICancelByInstrumentMethodParams {
 /**---Cancel All Method---*/
 export interface ICancelAllMethodParams {
   expiresAfter: number;
+  nonce?: number;
+}
+
+/**---Cancel By TWAP Oid Method---*/
+export interface ICancelTWAPOrderMethodParams {
+  oid: number;
   nonce?: number;
 }

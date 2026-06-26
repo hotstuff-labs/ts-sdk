@@ -124,6 +124,16 @@ export class ExchangeClient<T extends TT.IRequestTransport, W> {
     return this._executeAction({ action: "placeOrder", params }, opts?.signal);
   }
 
+  async placeTWAPOrder(
+    params: TM.IPlaceTWAPOrderMethodParams,
+    opts?: any,
+  ): Promise<any> {
+    return this._executeAction(
+      { action: "placeTWAPOrder", params },
+      opts?.signal,
+    );
+  }
+
   async cancelByOid(
     params: TM.ICancelByOidMethodParams,
     opts?: any,
@@ -153,6 +163,16 @@ export class ExchangeClient<T extends TT.IRequestTransport, W> {
 
   async cancelAll(params: TM.ICancelAllMethodParams, opts?: any): Promise<any> {
     return this._executeAction({ action: "cancelAll", params }, opts?.signal);
+  }
+
+  async cancelTWAPOrder(
+    params: TM.ICancelTWAPOrderMethodParams,
+    opts?: any,
+  ): Promise<any> {
+    return this._executeAction(
+      { action: "cancelTWAPOrder", params },
+      opts?.signal,
+    );
   }
 
   /**---Collateral Transfer Methods---*/
