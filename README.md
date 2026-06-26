@@ -1,4 +1,4 @@
-# Hotstuff TypeScript
+# Hotstuff TypeScript SDK
 
 [![npm version](https://img.shields.io/npm/v/@hotstuff-labs/ts-sdk.svg)](https://www.npmjs.com/package/@hotstuff-labs/ts-sdk)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
