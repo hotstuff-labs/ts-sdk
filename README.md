@@ -1,4 +1,4 @@
-# Hotstuff TypeScript SDK
+# Hotstuff TypeScript
 
 [![npm version](https://img.shields.io/npm/v/@hotstuff-labs/ts-sdk.svg)](https://www.npmjs.com/package/@hotstuff-labs/ts-sdk)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
@@ -28,27 +28,31 @@ import {
   InfoClient,
   ExchangeClient,
   SubscriptionClient,
-} from '@hotstuff-labs/ts-sdk';
-import { createWalletClient, http } from 'viem';
-import { mainnet } from 'viem/chains';
-import { privateKeyToAccount } from 'viem/accounts';
+} from "@hotstuff-labs/ts-sdk";
+import { createWalletClient, http } from "viem";
+import { mainnet } from "viem/chains";
+import { privateKeyToAccount } from "viem/accounts";
 
 const httpTransport = new HttpTransport({ isTestnet: true });
 const wsTransport = new WebSocketTransport({ isTestnet: true });
 
 const info = new InfoClient({ transport: httpTransport });
-const ticker = await info.ticker({ symbol: 'BTC-PERP' });
-console.log('Ticker:', ticker);
+const ticker = await info.ticker({ symbol: "BTC-PERP" });
+console.log("Ticker:", ticker);
 
 const account = privateKeyToAccount(process.env.PRIVATE_KEY as `0x${string}`);
-const wallet = createWalletClient({ account, chain: mainnet, transport: http() });
+const wallet = createWalletClient({
+  account,
+  chain: mainnet,
+  transport: http(),
+});
 const exchange = new ExchangeClient({ transport: httpTransport, wallet });
 
 await exchange.cancelAll({ expiresAfter: Date.now() + 60_000 });
 
 const subscriptions = new SubscriptionClient({ transport: wsTransport });
-const sub = await subscriptions.ticker({ symbol: 'BTC-PERP' }, (event) => {
-  console.log('Live ticker:', event.detail);
+const sub = await subscriptions.ticker({ symbol: "BTC-PERP" }, (event) => {
+  console.log("Live ticker:", event.detail);
 });
 
 await sub.unsubscribe();
@@ -70,15 +74,15 @@ Methods:
 Examples:
 
 ```ts
-const user = '0x1234...' as `0x${string}`;
+const user = "0x1234..." as `0x${string}`;
 
-await info.supportedCollateral({ symbol: 'USDC' });
-await info.instruments({ type: 'all' });
-await info.orderbook({ symbol: 'BTC-PERP', depth: 20 });
+await info.supportedCollateral({ symbol: "USDC" });
+await info.instruments({ type: "all" });
+await info.orderbook({ symbol: "BTC-PERP", depth: 20 });
 await info.fills({ user, page: 1, limit: 50 });
 await info.blocks({ offset: 0, limit: 10 });
-await info.transactionDetails({ tx_hash: '0xabc...' });
-await info.subVaults({ vault_address: '0xvault...' as `0x${string}` });
+await info.transactionDetails({ tx_hash: "0xabc..." });
+await info.subVaults({ vault_address: "0xvault..." as `0x${string}` });
 ```
 
 All methods accept optional `AbortSignal` as the second argument.
@@ -101,11 +105,11 @@ await exchange.placeOrder({
   orders: [
     {
       instrumentId: 1,
-      side: 'b',
-      positionSide: 'BOTH',
-      price: '50000',
-      size: '0.1',
-      tif: 'GTC',
+      side: "b",
+      positionSide: "BOTH",
+      price: "50000",
+      size: "0.1",
+      tif: "GTC",
       ro: false,
       po: false,
       cloid: `my-order-${Date.now()}`,
@@ -115,13 +119,13 @@ await exchange.placeOrder({
 });
 
 await exchange.cancelByCloid({
-  cancels: [{ cloid: 'my-order-1', instrumentId: 1 }],
+  cancels: [{ cloid: "my-order-1", instrumentId: 1 }],
   expiresAfter: Date.now() + 60_000,
 });
 
 await exchange.accountInternalBalanceTransferRequest({
   collateralId: 1,
-  amount: '25.0',
+  amount: "25.0",
   toDerivativesAccount: true,
 });
 ```
@@ -139,26 +143,33 @@ Methods:
 Examples:
 
 ```ts
-const user = '0x1234...' as `0x${string}`;
+const user = "0x1234..." as `0x${string}`;
 
-const tradesSub = await subscriptions.trades({ symbol: 'BTC-PERP' }, (event) => {
-  console.log('Trades:', event.detail);
-});
+const tradesSub = await subscriptions.trades(
+  { symbol: "BTC-PERP" },
+  (event) => {
+    console.log("Trades:", event.detail);
+  },
+);
 
 const ordersSub = await subscriptions.orders({ user }, (event) => {
-  console.log('Orders:', event.detail);
+  console.log("Orders:", event.detail);
 });
 
 const chartSub = await subscriptions.chart(
   {
-    instrument_id: 'BTC-PERP',
-    chart_type: 'mark',
-    resolution: '1',
+    instrument_id: "BTC-PERP",
+    chart_type: "mark",
+    resolution: "1",
   },
-  (event) => console.log('Chart:', event.detail),
+  (event) => console.log("Chart:", event.detail),
 );
 
-await Promise.all([tradesSub.unsubscribe(), ordersSub.unsubscribe(), chartSub.unsubscribe()]);
+await Promise.all([
+  tradesSub.unsubscribe(),
+  ordersSub.unsubscribe(),
+  chartSub.unsubscribe(),
+]);
 ```
 
 ## Transports
@@ -166,19 +177,19 @@ await Promise.all([tradesSub.unsubscribe(), ordersSub.unsubscribe(), chartSub.un
 ### HttpTransport
 
 ```ts
-import { HttpTransport } from '@hotstuff-labs/ts-sdk';
+import { HttpTransport } from "@hotstuff-labs/ts-sdk";
 
 const transport = new HttpTransport({
   isTestnet: true,
   timeout: 5000,
   server: {
     mainnet: {
-      api: 'https://api.hotstuff.trade/',
-      rpc: 'https://api.hotstuff.trade/',
+      api: "https://api.hotstuff.trade/",
+      rpc: "https://api.hotstuff.trade/",
     },
     testnet: {
-      api: 'https://testnet-test-api.hotstuff.exchange/',
-      rpc: 'https://testnet-test-api.hotstuff.exchange/',
+      api: "https://testnet-test-api.hotstuff.exchange/",
+      rpc: "https://testnet-test-api.hotstuff.exchange/",
     },
   },
 });
@@ -192,14 +203,14 @@ Default endpoints:
 ### WebSocketTransport
 
 ```ts
-import { WebSocketTransport } from '@hotstuff-labs/ts-sdk';
+import { WebSocketTransport } from "@hotstuff-labs/ts-sdk";
 
 const ws = new WebSocketTransport({
   isTestnet: true,
   timeout: 15000,
   server: {
-    mainnet: 'wss://api.hotstuff.trade/ws/',
-    testnet: 'wss://testnet-test-api.hotstuff.exchange/ws/',
+    mainnet: "wss://api.hotstuff.trade/ws/",
+    testnet: "wss://testnet-test-api.hotstuff.exchange/ws/",
   },
   keepAlive: {
     interval: 30000,
@@ -223,7 +234,7 @@ Default endpoints:
 The package exports namespaces for transport/client method types:
 
 ```ts
-import type { TransportsTypes, ClientsTypes } from '@hotstuff-labs/ts-sdk';
+import type { TransportsTypes, ClientsTypes } from "@hotstuff-labs/ts-sdk";
 
 type HttpOptions = TransportsTypes.IHttpTransportOptions;
 type InfoClientArgs<T extends TransportsTypes.IRequestTransport> =
@@ -237,7 +248,7 @@ type InfoClientArgs<T extends TransportsTypes.IRequestTransport> =
 
 ```ts
 try {
-  await info.ticker({ symbol: 'BTC-PERP' });
+  await info.ticker({ symbol: "BTC-PERP" });
 } catch (error) {
   console.error(error);
 }
