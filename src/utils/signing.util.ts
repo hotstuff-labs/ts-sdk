@@ -1,5 +1,5 @@
 import { encode } from "@msgpack/msgpack";
-import { keccak256 } from "viem";
+import { keccak256, zeroAddress, zeroHash } from "viem";
 
 export async function signAction(
   args: {
@@ -17,12 +17,12 @@ export async function signAction(
 
   const payloadHash = keccak256(actionBytes);
 
+  // Keep the zero verifying contract explicit for wallet typed-data signing.
   const domain = {
     name: "HotstuffCore",
     version: "1",
     chainId: 1,
-    verifyingContract:
-      "0x1234567890123456789012345678901234567890" as `0x${string}`,
+    verifyingContract: zeroAddress,
   };
 
   const types = {
@@ -30,6 +30,8 @@ export async function signAction(
       { name: "source", type: "string" },
       { name: "hash", type: "bytes32" },
       { name: "txType", type: "uint16" },
+      { name: "scheme", type: "uint8" },
+      { name: "subject", type: "bytes32" },
     ],
   };
 
@@ -37,6 +39,8 @@ export async function signAction(
     source: isTestnet ? "Testnet" : "Mainnet",
     hash: payloadHash,
     txType: args.txType,
+    scheme: 1, // AuthSchemeSecp256k1
+    subject: zeroHash, // The signing key is the account for secp256k1.
   };
 
   const signature = await args.wallet.signTypedData({
